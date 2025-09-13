@@ -29,6 +29,5 @@ public class Superpoder {
     private String superpoder;
 
     @ManyToMany(mappedBy = "superpoderes", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @Schema(hidden = true)
     private List<Heroi> herois = new ArrayList<>();
 }
