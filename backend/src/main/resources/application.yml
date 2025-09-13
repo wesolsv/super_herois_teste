@@ -2,7 +2,7 @@ spring:
   application:
     name: superheroiapi
   datasource:
-    url: jdbc:postgresql://localhost:5432/super_herois
+    url: jdbc:postgresql://localhost:5433/super_herois
     username: postgres
     password: postgres_password
     driver-class-name: org.postgresql.Driver

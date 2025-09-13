@@ -6,13 +6,15 @@ import lombok.ToString;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "herois", schema = "public")
 @Data
-//@ToString(exclude = "livros")
+@ToString(exclude = "superpoderes")
 @EntityListeners(AuditingEntityListener.class)
 public class Heroi {
 
@@ -35,11 +37,11 @@ public class Heroi {
     @Column(nullable = false)
     private Double peso;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "herois_superpoderes",
             joinColumns = @JoinColumn(name = "heroi_id"),
             inverseJoinColumns = @JoinColumn(name = "superpoder_id")
     )
-    private Set<Superpoder> superpoderes = new HashSet<>();
+    private List<Superpoder> superpoderes = new ArrayList<>();
 }

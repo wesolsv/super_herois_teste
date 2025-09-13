@@ -5,13 +5,15 @@ import lombok.Data;
 import lombok.ToString;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "superpoderes", schema = "public")
 @Data
-//@ToString(exclude = "livros")
+@ToString(exclude = "herois")
 @EntityListeners(AuditingEntityListener.class)
 public class Superpoder {
 
@@ -25,6 +27,6 @@ public class Superpoder {
     @Column(nullable = false, length = 50)
     private String superpoder;
 
-    @ManyToMany(mappedBy = "superpoderes")
-    private Set<Heroi> herois = new HashSet<>();
+    @ManyToMany(mappedBy = "superpoderes", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Heroi> herois = new ArrayList<>();
 }

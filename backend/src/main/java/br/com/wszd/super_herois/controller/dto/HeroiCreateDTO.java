@@ -6,19 +6,27 @@ import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-public record HeroiDTO (
+public record HeroiCreateDTO(
         @NotBlank(message = "campo obrigatório")
-        @Size(min = 2, max = 120, message = "campo fora do tamanho padrao")
+        @Size(min = 2, max = 120, message = "campo fora do tamanho padrão")
         String nome,
+
         @NotBlank(message = "campo obrigatório")
-        @Size(min = 2, max = 120, message = "campo fora do tamanho padrao")
+        @Size(min = 2, max = 120, message = "campo fora do tamanho padrão")
         String nomeHeroi,
+
         @NotNull(message = "campo obrigatório")
         @Past(message = "não pode ser uma data futura")
         LocalDateTime dataNascimento,
+
         @NotNull(message = "campo obrigatório")
         Double altura,
+
         @NotNull(message = "campo obrigatório")
-        Double peso){
-}
+        Double peso,
+
+        @NotNull(message = "campo obrigatório")
+        List<Long> superpoderIds
+){}
