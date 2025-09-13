@@ -18,7 +18,7 @@ Para garantir uma busca eficiente e flexível, a lógica de consulta foi cuidado
 A documentação da API, feita com o **Swagger UI**, foi um dos maiores desafios do projeto. A integração inicial resultou em erros de compatibilidade, incluindo o frustrante `NoSuchMethodError`, causado por versões conflitantes entre o Spring Boot e o SpringDoc. Após uma análise minuciosa, foi descoberto que uma dependência estava puxando uma versão incorreta do Spring Framework, o que foi corrigido removendo as versões explícitas e confiando no gerenciamento de dependências do `spring-boot-starter-parent`.
 
 ## Futuro do Projeto
-Esta API foi construída para ser a base de um projeto maior. Inicialmente, a ideia era desenvolver uma interface de usuário (front-end) completa para interagir com a API, mas devido a problemas pessoais e limitações de tempo, não pude finalizar esse detalhe, utilizei um mold para iniciar e configuração basica, mas não pude finalizar com calma. A API está pronta para ser consumida e pode ser facilmente integrada com qualquer aplicação front-end que desejar.
+Esta API foi construída para ser a base de um projeto maior. Inicialmente, a ideia era desenvolver uma interface de usuário (front-end) completa para interagir com a API, mas devido a problemas pessoais e limitações de tempo, não pude finalizar esse detalhe, utilizei um mold para iniciar e configuração basica, mas não pude finalizar com calma. A API está pronta para ser consumida e pode ser facilmente integrada com qualquer aplicação front-end que desejar, outros próximos passos seria incluir a camada de segurança e mensageria
 
 ## Como Rodar o Projeto
 
