@@ -52,11 +52,11 @@ public class GlobalExceptionHandler {
                 List.of(new ErroCampo(e.getCampo(), e.getMessage())));
     }
 
-//    @ExceptionHandler(RuntimeException.class)
-//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-//    public ErroResposta handleErrosNaoTratados(RuntimeException e){
-//        return new ErroResposta(HttpStatus.INTERNAL_SERVER_ERROR.value(),
-//                "Ocorreu um erro inesperado, contate a administração",
-//                List.of());
-//    }
+    @ExceptionHandler(RuntimeException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErroResposta handleErrosNaoTratados(RuntimeException e){
+        return new ErroResposta(HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                "Ocorreu um erro inesperado, contate a administração",
+                List.of());
+    }
 }

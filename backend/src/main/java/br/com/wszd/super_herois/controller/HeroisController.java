@@ -26,12 +26,9 @@ public class HeroisController {
 
     @PutMapping("/{id}")
     public ResponseEntity<HeroiResponseDTO> atualizarHeroi(@PathVariable Long id, @RequestBody @Valid HeroiCreateDTO dto) {
-        HeroiResponseDTO atualizado = heroiService.atualizarHeroi(id, dto);
-        if (atualizado != null) {
-            return ResponseEntity.ok(atualizado);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return heroiService.atualizarHeroi(id, dto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping
@@ -42,12 +39,9 @@ public class HeroisController {
 
     @GetMapping("/{id}")
     public ResponseEntity<HeroiResponseDTO> buscarHeroi(@PathVariable Long id) {
-        HeroiResponseDTO heroi = heroiService.buscarHeroiPorId(id);
-        if (heroi != null) {
-            return ResponseEntity.ok(heroi);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return heroiService.buscarHeroiPorId(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")

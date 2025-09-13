@@ -3,6 +3,8 @@ package br.com.wszd.super_herois.service;
 import br.com.wszd.super_herois.controller.dto.HeroiCreateDTO;
 import br.com.wszd.super_herois.controller.dto.HeroiResponseDTO;
 import br.com.wszd.super_herois.controller.mappers.HeroiMapper;
+import br.com.wszd.super_herois.exceptions.OperacaoNaoPermitidaException;
+import br.com.wszd.super_herois.exceptions.RegistroDuplicadoException;
 import br.com.wszd.super_herois.model.Heroi;
 import br.com.wszd.super_herois.repository.HeroiRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,20 +21,33 @@ public class HeroiService {
 
     @Transactional
     public HeroiResponseDTO criarHeroi(HeroiCreateDTO dto) {
+        if (heroiRepository.findByNomeHeroi(dto.nomeHeroi()).isPresent()) {
+            throw new RegistroDuplicadoException("O nome de herói '" + dto.nomeHeroi() + "' já está em uso.");
+        }
+
         Heroi heroi = heroiMapper.toEntity(dto);
+
         Heroi heroiSalvo = heroiRepository.save(heroi);
+
         return heroiMapper.toResponseDTO(heroiSalvo);
     }
 
     @Transactional
-    public HeroiResponseDTO atualizarHeroi(Long id, HeroiCreateDTO dto) {
-        return heroiRepository.findById(id)
-                .map(existing -> {
-                    heroiMapper.atualizarEntity(existing, dto);
-                    Heroi heroiSalvo = heroiRepository.save(existing);
-                    return heroiMapper.toResponseDTO(heroiSalvo);
-                })
-                .orElse(null);
+    public Optional<HeroiResponseDTO> atualizarHeroi(Long id, HeroiCreateDTO dto) {
+        Heroi heroiExistente = heroiRepository.findById(id)
+                .orElseThrow(() -> new OperacaoNaoPermitidaException("Herói com ID " + id + " não encontrado."));
+
+        if (!heroiExistente.getNomeHeroi().equals(dto.nomeHeroi())) {
+            boolean nomeHeroiJaExiste = heroiRepository.findByNomeHeroi(dto.nomeHeroi()).isPresent();
+            if (nomeHeroiJaExiste) {
+                throw new RegistroDuplicadoException("O nome de herói '" + dto.nomeHeroi() + "' já está em uso.");
+            }
+        }
+
+        heroiMapper.atualizarEntity(heroiExistente, dto);
+        Heroi heroiSalvo = heroiRepository.save(heroiExistente);
+
+        return Optional.ofNullable(heroiMapper.toResponseDTO(heroiSalvo));
     }
 
     @Transactional(readOnly = true)
@@ -51,19 +66,25 @@ public class HeroiService {
     }
 
     @Transactional(readOnly = true)
-    public HeroiResponseDTO buscarHeroiPorId(Long id) {
-        return heroiRepository.findByIdWithSuperpoderes(id)
-                .map(heroi -> {
-                    if (heroi.getSuperpoderes() != null) {
-                        heroi.getSuperpoderes().size();
-                    }
-                    return heroiMapper.toResponseDTO(heroi);
-                })
-                .orElse(null);
+    public Optional<HeroiResponseDTO> buscarHeroiPorId(Long id) {
+        Heroi heroi = heroiRepository.findByIdWithSuperpoderes(id)
+                .orElseThrow(() -> new OperacaoNaoPermitidaException("Herói com ID " + id + " não encontrado."));
+
+        if (heroi.getSuperpoderes() != null) {
+            heroi.getSuperpoderes().size();
+        }
+        return Optional.ofNullable(heroiMapper.toResponseDTO(heroi));
     }
 
     @Transactional
     public void deletarHeroi(Long id) {
+        if (!heroiRepository.existsById(id)) {
+            throw new OperacaoNaoPermitidaException("Herói com ID " + id + " não encontrado.");
+        }
         heroiRepository.deleteById(id);
+    }
+
+    public Optional<Heroi> obterPorId(Long id){
+        return heroiRepository.findById(id);
     }
 }

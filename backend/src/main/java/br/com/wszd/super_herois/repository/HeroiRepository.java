@@ -16,4 +16,6 @@ public interface HeroiRepository extends JpaRepository<Heroi, Long> {
 
     @Query("SELECT h FROM Heroi h LEFT JOIN FETCH h.superpoderes WHERE h.id = :id")
     Optional<Heroi> findByIdWithSuperpoderes(Long id);
+
+    Optional<Heroi> findByNomeHeroi(String nomeHeroi);
 }
