@@ -1,5 +1,6 @@
 package br.com.wszd.super_herois.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
@@ -28,5 +29,6 @@ public class Superpoder {
     private String superpoder;
 
     @ManyToMany(mappedBy = "superpoderes", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @Schema(hidden = true)
     private List<Heroi> herois = new ArrayList<>();
 }
