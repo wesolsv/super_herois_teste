@@ -1,0 +1,42 @@
+Comandos para container do docker
+
+#Network para comunicação dos containers
+docker network create herois-network
+
+# Rodar container posgres 16.3
+docker run --name heroisdb -p 5432:5432 -e POSTGRES_PASSWORD=postgres_password -e POSTGRES_USER=postgres -e POSTGRES_DB=super_herois --network herois-network -d postgres:16.3
+
+# Rodar Pgadmin4
+docker run --name pgadmin4 -p 15432:80 -e PGADMIN_DEFAULT_EMAIL=admin@admin.com -e PGADMIN_DEFAULT_PASSWORD=admin --network herois-network -d dpage/pgadmin4:8.9
+
+##OBS: Podem existir particularidades com as portas pois eu já tinha alguns containers em minha máquina, mas acredito que da forma acima deve funcionar.
+
+-- superpoderes
+CREATE TABLE superpoderes (
+    id SERIAL PRIMARY KEY,
+    descricao VARCHAR(250) NOT NULL,
+    superpoder VARCHAR(50) NOT NULL
+);
+
+-- heróis
+CREATE TABLE herois (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(120) NOT NULL,
+    nome_heroi VARCHAR(120) NOT NULL UNIQUE,
+    data_nascimento TIMESTAMP NOT NULL,
+    altura DOUBLE PRECISION NOT NULL,
+    peso DOUBLE PRECISION NOT NULL
+);
+
+-- tabela de relacionamento muitos-para-muitos
+CREATE TABLE herois_superpoderes (
+    heroi_id INT NOT NULL,
+    superpoder_id INT NOT NULL,
+    PRIMARY KEY (heroi_id, superpoder_id),
+    FOREIGN KEY (heroi_id) REFERENCES herois(id) ON DELETE CASCADE,
+    FOREIGN KEY (superpoder_id) REFERENCES superpoderes(id) ON DELETE CASCADE
+);
+
+
+
+

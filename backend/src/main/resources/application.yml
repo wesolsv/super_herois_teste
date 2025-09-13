@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: superheroiapi
+  datasource:
+    url: jdbc:postgresql://localhost:5432/super_herois
+    username: postgres
+    password: postgres_password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate.format_sql: true
+
+##PASSWORD POSTGRES = postgres_password
+##LOGIN POSTGRES = postgres
