@@ -1,0 +1,9 @@
+@import "~bootstrap/dist/css/bootstrap.min.css";
+
+/* small custom styles */
+body {
+  padding-top: 60px;
+}
+.container-app {
+  max-width: 1000px;
+}

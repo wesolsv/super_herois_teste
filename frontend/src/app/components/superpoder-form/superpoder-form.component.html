@@ -1,0 +1,17 @@
+<div class="card p-3">
+  <h4>Novo Superpoder</h4>
+  <form (ngSubmit)="salvar()">
+    <div class="mb-3">
+      <label class="form-label">Nome do Poder</label>
+      <input class="form-control" [(ngModel)]="poder.superpoder" name="superpoder" required />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Descrição</label>
+      <textarea class="form-control" [(ngModel)]="poder.descricao" name="descricao"></textarea>
+    </div>
+    <div>
+      <button class="btn btn-success me-2">Salvar</button>
+      <a class="btn btn-secondary" routerLink="/superpoderes">Cancelar</a>
+    </div>
+  </form>
+</div>

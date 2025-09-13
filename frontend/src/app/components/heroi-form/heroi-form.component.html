@@ -1,0 +1,43 @@
+<div class="card p-3">
+  <h4>{{ isEdicao ? 'Editar Herói' : 'Novo Herói' }}</h4>
+
+  <form (ngSubmit)="salvar()">
+    <div class="mb-3">
+      <label class="form-label">Nome</label>
+      <input class="form-control" [(ngModel)]="heroi.nome" name="nome" required />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Nome de Herói</label>
+      <input class="form-control" [(ngModel)]="heroi.nomeHeroi" name="nomeHeroi" required />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Data Nascimento</label>
+      <input type="date" class="form-control" [(ngModel)]="heroi.dataNascimento" name="dataNascimento" required />
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <label class="form-label">Altura (m)</label>
+        <input type="number" step="0.01" class="form-control" [(ngModel)]="heroi.altura" name="altura" required />
+      </div>
+      <div class="col">
+        <label class="form-label">Peso (kg)</label>
+        <input type="number" step="0.1" class="form-control" [(ngModel)]="heroi.peso" name="peso" required />
+      </div>
+    </div>
+
+    <div class="mb-3 mt-3">
+      <label class="form-label">Superpoderes (Ctrl+Click para múltipla seleção)</label>
+      <select class="form-select" [(ngModel)]="heroi.superpoderes" name="superpoderes" multiple>
+        <option *ngFor="let p of superpoderes" [ngValue]="p">{{ p.superpoder }}</option>
+      </select>
+    </div>
+
+    <div class="mt-3">
+      <button class="btn btn-success me-2">Salvar</button>
+      <a class="btn btn-secondary" routerLink="/herois">Cancelar</a>
+    </div>
+  </form>
+</div>
